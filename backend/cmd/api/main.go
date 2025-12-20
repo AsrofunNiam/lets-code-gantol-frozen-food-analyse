@@ -22,12 +22,9 @@ func main() {
 	}
 	defer db.Close()
 
-	// (opsional tapi bagus)
 	db.SetMaxOpenConns(10)
 	db.SetMaxIdleConns(5)
 	db.SetConnMaxLifetime(time.Hour)
-
-	// 🔑 INI PENTING
 	postgresRepo := repository.New(db)
 
 	forecastService := &service.ForecastService{

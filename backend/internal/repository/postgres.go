@@ -12,7 +12,9 @@ type Postgres struct {
 }
 
 func New(db *sql.DB) *Postgres {
-	logger := database.StdLogger{}
+	logger := database.StdLogger{
+		Service: "forecast-api",
+	}
 
 	database := database.New(db, logger)
 

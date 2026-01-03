@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/AsrofunNiam/lets-code-gantol-frozen-food-analyse/internal/database"
 	"github.com/AsrofunNiam/lets-code-gantol-frozen-food-analyse/internal/handler"
 	"github.com/AsrofunNiam/lets-code-gantol-frozen-food-analyse/internal/repository"
 	"github.com/AsrofunNiam/lets-code-gantol-frozen-food-analyse/internal/service"
@@ -27,8 +28,13 @@ func main() {
 	db.SetConnMaxLifetime(time.Hour)
 	postgresRepo := repository.New(db)
 
+	logger := database.StdLogger{
+		Service: "forecast-api",
+	}
+
 	forecastService := &service.ForecastService{
-		Pg: postgresRepo,
+		Pg:     postgresRepo,
+		Logger: logger,
 	}
 
 	forecastHandler := &handler.ForecastHandler{
